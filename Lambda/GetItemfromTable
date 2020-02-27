@@ -1,0 +1,28 @@
+"use strict";
+const AWS = require("aws-sdk");
+
+AWS.config.update({ region: "us-east-1" });
+
+exports.handler = async event => {
+    
+  // console.log(JSON.stringify(event));
+   
+   const {id} = event;
+   //const id = event.
+   
+    
+  let documentClient = new AWS.DynamoDB.DocumentClient();
+  const params = {
+    TableName: "smccCustomers",
+    Key: {
+      id: id
+    }
+  };
+
+  try {
+    const data = await documentClient.get(params).promise();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
